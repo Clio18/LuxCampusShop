@@ -26,7 +26,7 @@ public class GetRequestServlet extends HttpServlet {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("products", products);
 
-        String page = pageGenerator.getPage("product_list.html", parameters);
+        String page = pageGenerator.getPage("products.html", parameters);
         resp.getWriter().write(page);
     }
 }
