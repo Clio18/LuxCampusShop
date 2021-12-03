@@ -11,6 +11,7 @@
     <title>Online Shop</title>
 </head>
 <body>
+<h1>Add product</h1>
 
 <!-- Optional JavaScript; choose one of the two! -->
 
@@ -23,32 +24,24 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 -->
 <div class="container">
-<h1>All products</h1>
-</div>
+<form class="row g-3" action="/products/add" method="post">
+    <div class="col-md-6">
+        <label for="exampleInputProduct1" class="form-label">Product name</label>
+        <input type="text" class="form-control" id="exampleInputProduct1"
+               name="name" aria-describedby="productHelp" required>
+        <div id="productHelp" class="form-text">Enter a product name</div>
+    </div>
 
-<div class="container">
-    <a class="btn btn-secondary" href="/products/add">Add new product</a>
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Name</th>
-        <th scope="col">Price</th>
-        <th scope="col">Date</th>
-    </tr>
-    </thead>
-    <tbody>
-        <#list products as product>
-    <tr>
-        <th scope="row">${product.id}</th>
-        <td>${product.name}</td>
-        <td>${product.price}</td>
-        <td>${product.date}</td>
-    </tr>
-        </#list>
-    </tbody>
-</table>
+    <div class="col-md-6">
+        <label for="exampleInputPrice1" class="form-label">Product price</label>
+        <input type="number" step="0.0001" class="form-control" id="exampleInputPrice1"
+               name="price" aria-describedby="priceHelp" required>
+        <div id="priceHelp" class="form-text">Enter a product price</div>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-secondary">Submit</button>
+    </div>
+</form>
 </div>
-
 </body>
 </html>

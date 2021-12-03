@@ -2,6 +2,7 @@ package com.luxcampus.shopOnline;
 
 import com.luxcampus.shopOnline.dao.jdbc.ProductDAOImpl;
 import com.luxcampus.shopOnline.service.ProductService;
+import com.luxcampus.shopOnline.web.servlet.AddRequestServlet;
 import com.luxcampus.shopOnline.web.servlet.GetRequestServlet;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
@@ -19,9 +20,11 @@ public class Starter {
 
         // servlet
         GetRequestServlet getRequestServlet = new GetRequestServlet(productService);
+        AddRequestServlet addRequestServlet = new AddRequestServlet(productService);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(getRequestServlet), "/");
+        context.addServlet(new ServletHolder(addRequestServlet), "/products/add");
 
         Server server = new Server(8080);
         server.setHandler(context);
