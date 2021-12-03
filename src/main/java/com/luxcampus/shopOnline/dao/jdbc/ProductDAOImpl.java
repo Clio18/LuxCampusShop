@@ -1,4 +1,5 @@
 package com.luxcampus.shopOnline.dao.jdbc;
+
 import com.luxcampus.shopOnline.dao.ProductDAO;
 import com.luxcampus.shopOnline.entity.Product;
 
@@ -9,7 +10,7 @@ import java.util.List;
 
 /*
 product_id serial PRIMARY KEY,
-        name VARCHAR ( 50 ) UNIQUE NOT NULL,
+        name VARCHAR ( 50 ) NOT NULL,
         price DOUBLE PRECISION NOT NULL,
         created_on TIMESTAMP NOT NULL
         );
@@ -19,12 +20,12 @@ product_id serial PRIMARY KEY,
 public class ProductDAOImpl implements ProductDAO {
     private static final ShopRowMapper SHOP_ROW_MAPPER = new ShopRowMapper();
     private static final String GET_SQL = "SELECT product_id, name, price, created_on FROM product;";
-    private static final String SAVE_SQL = "INSERT INTO product(name, price, created_on)VALUES (?, ?, ?)";
+    private static final String SAVE_SQL = "INSERT INTO product(name, price, created_on) VALUES (?, ?, ?)";
     private static final String DELETE_SQL = "DELETE FROM product where product_id= ?";
-    private static final String UPDATE_SQL = "UPDATE product SET name = ?, price = ?, date = ? where product_id = ?";
+    private static final String UPDATE_SQL = "UPDATE product SET name = ?, price = ?, created_on = ? where product_id = ?";
 
     @Override
-    public List<Product> get(){
+    public List<Product> get() {
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(GET_SQL);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -48,15 +49,14 @@ public class ProductDAOImpl implements ProductDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(SAVE_SQL)) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(product.getDate()));
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(product.getCreated_on()));
             preparedStatement.executeUpdate();
             flag = true;
             return flag;
         } catch (SQLException e) {
             e.printStackTrace();
-            flag = false;
+            throw new RuntimeException("Error with product insert", e);
         }
-        return flag;
     }
 
     @Override
@@ -65,14 +65,16 @@ public class ProductDAOImpl implements ProductDAO {
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SQL)) {
             preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
+            int result = preparedStatement.executeUpdate();
+            if (result==0){
+                throw new RuntimeException();
+            }
             flag = true;
             return flag;
         } catch (SQLException e) {
             e.printStackTrace();
-            flag = false;
+            throw new RuntimeException("Error with product delete", e);
         }
-        return flag;
     }
 
     //"UPDATE product SET name = ?, price = ?, date = ? where product_id = ?";
@@ -83,16 +85,18 @@ public class ProductDAOImpl implements ProductDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL)) {
             preparedStatement.setString(1, product.getName());
             preparedStatement.setDouble(2, product.getPrice());
-            preparedStatement.setTimestamp(3, Timestamp.valueOf(product.getDate()));
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(product.getCreated_on()));
             preparedStatement.setInt(4, product.getId());
-            preparedStatement.executeUpdate();
+            int result = preparedStatement.executeUpdate();
+            if (result==0){
+                throw new RuntimeException();
+            }
             flag = true;
             return flag;
         } catch (SQLException e) {
             e.printStackTrace();
-            flag = false;
+            throw new RuntimeException("Error with product update", e);
         }
-        return flag;
     }
 
 

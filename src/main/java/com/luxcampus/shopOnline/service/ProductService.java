@@ -3,6 +3,7 @@ package com.luxcampus.shopOnline.service;
 import com.luxcampus.shopOnline.dao.ProductDAO;
 import com.luxcampus.shopOnline.entity.Product;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class ProductService {
@@ -19,12 +20,16 @@ public class ProductService {
     }
 
     public boolean save(Product product){
+        product.setCreated_on(LocalDateTime.now());
         return productDAO.save(product);
     }
+
     public boolean delete(int id){
         return productDAO.delete(id);
     }
+
     public boolean update(Product product){
+        product.setCreated_on(LocalDateTime.now());
         return productDAO.update(product);
     }
 }

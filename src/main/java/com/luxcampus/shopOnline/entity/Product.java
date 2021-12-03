@@ -13,6 +13,6 @@ public class Product {
     private int id;
     private String name;
     private double price;
-    private LocalDateTime date;
+    private LocalDateTime created_on;
 
 }

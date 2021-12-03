@@ -35,6 +35,6 @@ class ShopRowMapperTest {
         //assertEquals(100, actual.getId());
         assertEquals("Milk", actual.getName());
         assertEquals(100.00, actual.getPrice());
-        assertEquals(localDateTime, actual.getDate());
+        assertEquals(localDateTime, actual.getCreated_on());
     }
 }

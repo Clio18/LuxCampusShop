@@ -27,7 +27,7 @@
 </div>
 
 <div class="container">
-    <a class="btn btn-secondary" href="/products/add">Add new product</a>
+    <a class="btn btn-outline-success" href="/products/add">Add new product</a>
 <table class="table">
     <thead>
     <tr>
@@ -43,12 +43,18 @@
         <th scope="row">${product.id}</th>
         <td>${product.name}</td>
         <td>${product.price}</td>
-        <td>${product.date}</td>
+        <td>${product.created_on}</td>
     </tr>
         </#list>
     </tbody>
 </table>
+    <a class="btn btn-outline-danger" href="/products/delete">Delete</a>
+    <a class="btn btn-outline-warning" href="/products/update">Update</a>
 </div>
-
+<#if errorMessage??>
+<div>
+<p align="center"><strong>${errorMessage}</strong></p>
+</div>
+</#if>
 </body>
 </html>

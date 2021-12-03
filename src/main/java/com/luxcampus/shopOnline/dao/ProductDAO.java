@@ -9,5 +9,5 @@ public interface ProductDAO {
 
     boolean delete(int id);
 
-    boolean update(Product employee);
+    boolean update(Product product);
 }

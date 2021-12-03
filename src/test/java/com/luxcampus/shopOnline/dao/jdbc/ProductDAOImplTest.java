@@ -19,7 +19,7 @@ class ProductDAOImplTest {
             assertNotEquals(0, product.getId());
             assertNotNull(product.getName());
             assertNotNull(product.getPrice());
-            assertNotNull(product.getDate());
+            assertNotNull(product.getCreated_on());
         }
     }
 
@@ -30,7 +30,7 @@ class ProductDAOImplTest {
                 id(200)
                 .name("A")
                 .price(1000.00)
-                .date(LocalDateTime.now())
+                .created_on(LocalDateTime.now())
                 .build();
         assertTrue(productDAO.save(product));
     }
@@ -42,7 +42,7 @@ class ProductDAOImplTest {
                 id(100)
                 .name("AA")
                 .price(2000.00)
-                .date(LocalDateTime.now())
+                .created_on(LocalDateTime.now())
                 .build();
         assertTrue(productDAO.save(product));
     }

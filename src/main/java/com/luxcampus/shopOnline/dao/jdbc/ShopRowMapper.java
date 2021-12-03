@@ -17,7 +17,7 @@ public class ShopRowMapper {
                 id(id)
                 .name(name)
                 .price(price)
-                .date(createdOn.toLocalDateTime())
+                .created_on(createdOn.toLocalDateTime())
                 .build();
 
         return product;
