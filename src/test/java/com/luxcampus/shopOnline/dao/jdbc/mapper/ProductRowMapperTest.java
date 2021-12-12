@@ -1,6 +1,6 @@
 package com.luxcampus.shopOnline.dao.jdbc.mapper;
 
-import com.luxcampus.shopOnline.dao.jdbc.ShopRowMapper;
+import com.luxcampus.shopOnline.dao.jdbc.ProductRowMapper;
 import com.luxcampus.shopOnline.entity.Product;
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +13,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class ShopRowMapperTest {
+class ProductRowMapperTest {
 
     @Test
     void mapRow() throws SQLException {
         // prepare
-        ShopRowMapper shopMapper = new ShopRowMapper();
+        ProductRowMapper shopMapper = new ProductRowMapper();
         LocalDateTime localDateTime = LocalDateTime.of(2021, 10, 11, 19, 22, 30);
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
 

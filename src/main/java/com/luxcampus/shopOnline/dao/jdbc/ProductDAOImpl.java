@@ -18,7 +18,7 @@ product_id serial PRIMARY KEY,
 
 
 public class ProductDAOImpl implements ProductDAO {
-    private static final ShopRowMapper SHOP_ROW_MAPPER = new ShopRowMapper();
+    private static final ProductRowMapper SHOP_ROW_MAPPER = new ProductRowMapper();
     private static final String GET_SQL = "SELECT product_id, name, price, created_on FROM product;";
     private static final String SAVE_SQL = "INSERT INTO product(name, price, created_on) VALUES (?, ?, ?)";
     private static final String DELETE_SQL = "DELETE FROM product where product_id= ?";

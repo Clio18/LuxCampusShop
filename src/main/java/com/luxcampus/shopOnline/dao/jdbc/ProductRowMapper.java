@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class ShopRowMapper {
+public class ProductRowMapper {
     public Product mapRow(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("product_id");
         String name = resultSet.getString("name");

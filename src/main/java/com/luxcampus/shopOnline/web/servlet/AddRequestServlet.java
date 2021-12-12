@@ -2,6 +2,7 @@ package com.luxcampus.shopOnline.web.servlet;
 
 import com.luxcampus.shopOnline.entity.Product;
 import com.luxcampus.shopOnline.service.ProductService;
+import com.luxcampus.shopOnline.service.SecurityService;
 import com.luxcampus.shopOnline.web.util.PageGenerator;
 
 import javax.servlet.ServletException;
@@ -16,9 +17,13 @@ import java.util.Map;
 
 public class AddRequestServlet extends HttpServlet {
     private ProductService productService;
+    private SecurityService securityService;
+    private List<String> userTokens;
 
-    public AddRequestServlet(ProductService productService) {
+    public AddRequestServlet(ProductService productService, List<String> userTokens, SecurityService securityService) {
         this.productService = productService;
+        this.userTokens = userTokens;
+        this.securityService = securityService;
     }
 
     @Override
@@ -30,18 +35,22 @@ public class AddRequestServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        try {
-            String name = req.getParameter("name");
-            double price = Double.parseDouble(req.getParameter("price"));
-            Product product = Product.builder().name(name).price(price).build();
-            productService.save(product);
-            resp.sendRedirect("/products");
-        }catch (Exception e){
-            String errorMessage = "Your product has not been added! Please try again";
-            PageGenerator pageGenerator = PageGenerator.instance();
-            Map<String, Object> parameters = Map.of("errorMessage", errorMessage);
-            String page = pageGenerator.getPage("addProduct.html", parameters);
-            resp.getWriter().write(page);
-        }
+       if (securityService.isAuth(req, userTokens)) {
+           try {
+               String name = req.getParameter("name");
+               double price = Double.parseDouble(req.getParameter("price"));
+               Product product = Product.builder().name(name).price(price).build();
+               productService.save(product);
+               resp.sendRedirect("/products");
+           } catch (Exception e) {
+               String errorMessage = "Your product has not been added! Please try again";
+               PageGenerator pageGenerator = PageGenerator.instance();
+               Map<String, Object> parameters = Map.of("errorMessage", errorMessage);
+               String page = pageGenerator.getPage("addProduct.html", parameters);
+               resp.getWriter().write(page);
+           }
+       }else {
+           resp.sendRedirect("/login");
+       }
     }
 }
