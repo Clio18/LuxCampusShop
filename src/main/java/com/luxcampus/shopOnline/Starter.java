@@ -11,6 +11,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Starter {
@@ -29,7 +30,7 @@ public class Starter {
         SecurityService securityService = new SecurityService();
 
         //list of user tokens for auth
-        List<String> userTokens = new ArrayList<>();
+        List<String> userTokens = Collections.synchronizedList(new ArrayList<>());
 
         // servlet
         GetRequestServlet getRequestServlet = new GetRequestServlet(productService, userTokens, securityService);
@@ -37,8 +38,8 @@ public class Starter {
         DeleteRequestServlet deleteRequestServlet = new DeleteRequestServlet(productService, userTokens, securityService);
         UpdateRequestServlet updateRequestServlet = new UpdateRequestServlet(productService, userTokens, securityService);
         //login servlet
-        LoginServlet loginServlet = new LoginServlet(userService, userTokens);
-        RegistrationServlet registrationServlet = new RegistrationServlet(userService);
+        LoginServlet loginServlet = new LoginServlet(userService, userTokens, securityService);
+        RegistrationServlet registrationServlet = new RegistrationServlet(userService, securityService);
 
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(getRequestServlet), "/products");

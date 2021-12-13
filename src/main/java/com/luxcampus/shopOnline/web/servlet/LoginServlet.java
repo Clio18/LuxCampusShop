@@ -2,6 +2,7 @@ package com.luxcampus.shopOnline.web.servlet;
 
 import com.luxcampus.shopOnline.entity.Product;
 import com.luxcampus.shopOnline.entity.User;
+import com.luxcampus.shopOnline.service.SecurityService;
 import com.luxcampus.shopOnline.service.UserService;
 import com.luxcampus.shopOnline.web.util.PageGenerator;
 
@@ -19,10 +20,12 @@ import java.util.UUID;
 public class LoginServlet extends HttpServlet {
     private UserService userService;
     private List<String> userTokens;
+    private SecurityService securityService;
 
-    public LoginServlet(UserService userService, List<String> userTokens) {
+    public LoginServlet(UserService userService, List<String> userTokens, SecurityService securityService) {
         this.userService = userService;
         this.userTokens = userTokens;
+        this.securityService = securityService;
     }
 
     //return login page
@@ -38,9 +41,9 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             String password = req.getParameter("password");
-            //securityService.getHash(password);
+            String hashPassword = securityService.getHash(password);
             String email = req.getParameter("email");
-            User user = User.builder().email(email).password(password).build();
+            User user = User.builder().email(email).password(hashPassword).build();
             if (userService.isNew(user)) {
                 resp.sendRedirect("/registration");
             } else {

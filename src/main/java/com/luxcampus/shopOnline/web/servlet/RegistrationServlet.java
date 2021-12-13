@@ -1,6 +1,7 @@
 package com.luxcampus.shopOnline.web.servlet;
 
 import com.luxcampus.shopOnline.entity.User;
+import com.luxcampus.shopOnline.service.SecurityService;
 import com.luxcampus.shopOnline.service.UserService;
 import com.luxcampus.shopOnline.web.util.PageGenerator;
 
@@ -16,9 +17,11 @@ import java.util.UUID;
 
 public class RegistrationServlet extends HttpServlet {
     private UserService userService;
+    private SecurityService securityService;
 
-    public RegistrationServlet(UserService userService) {
+    public RegistrationServlet(UserService userService, SecurityService securityService) {
         this.userService = userService;
+        this.securityService = securityService;
     }
 
     @Override
@@ -34,14 +37,14 @@ public class RegistrationServlet extends HttpServlet {
             String name = req.getParameter("name");
             String lastName = req.getParameter("last_Name");
             String password = req.getParameter("password");
-            //securityService.getHash(password);
+            String hashPassword = securityService.getHash(password);
             String email = req.getParameter("email");
             User user = User.builder()
                     .name(name)
                     .lastName(lastName)
                     .email(email)
                     //should be hashed
-                    .password(password)
+                    .password(hashPassword)
                     .build();
             userService.save(user);
             resp.sendRedirect("/login");
