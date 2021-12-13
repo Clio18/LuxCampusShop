@@ -34,11 +34,13 @@ public class RegistrationServlet extends HttpServlet {
             String name = req.getParameter("name");
             String lastName = req.getParameter("last_Name");
             String password = req.getParameter("password");
+            //securityService.getHash(password);
             String email = req.getParameter("email");
             User user = User.builder()
                     .name(name)
                     .lastName(lastName)
                     .email(email)
+                    //should be hashed
                     .password(password)
                     .build();
             userService.save(user);

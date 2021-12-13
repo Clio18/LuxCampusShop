@@ -8,10 +8,10 @@ public class SecurityService {
     public boolean isAuth(HttpServletRequest req, List<String> userTokens) {
         boolean isAuth = false;
         Cookie[] cookies = req.getCookies();
-        if (cookies!=null){
+        if (cookies != null) {
             for (Cookie cookie : cookies) {
-                for (String userToken : userTokens) {
-                    if (cookie.getValue().equals(userToken)){
+                if (cookie.getName().equals("user-token")) {
+                    if (userTokens.contains(cookie.getValue())) {
                         isAuth = true;
                     }
                 }

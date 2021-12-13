@@ -38,6 +38,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             String password = req.getParameter("password");
+            //securityService.getHash(password);
             String email = req.getParameter("email");
             User user = User.builder().email(email).password(password).build();
             if (userService.isNew(user)) {
