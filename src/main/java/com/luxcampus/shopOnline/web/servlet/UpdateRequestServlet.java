@@ -33,7 +33,6 @@ public class UpdateRequestServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        if (securityService.isAuth(req, userTokens)) {
             try {
                 int id = Integer.parseInt(req.getParameter("id"));
                 String name = req.getParameter("name");
@@ -48,8 +47,5 @@ public class UpdateRequestServlet extends HttpServlet {
                 String page = pageGenerator.getPage("updateProduct.html", parameters);
                 resp.getWriter().write(page);
             }
-        } else {
-            resp.sendRedirect("/login");
-        }
     }
 }

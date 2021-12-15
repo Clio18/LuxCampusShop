@@ -7,7 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class SecurityService {
-    public boolean isAuth(HttpServletRequest req, List<String> userTokens) {
+    private List<String> userTokens;
+
+    public SecurityService(List<String> userTokens) {
+        this.userTokens = userTokens;
+    }
+
+    public boolean isAuth(HttpServletRequest req) {
         boolean isAuth = false;
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
@@ -25,5 +31,9 @@ public class SecurityService {
     public String getHash(String password) {
         String md5Hex = DigestUtils.md5Hex(password);
         return md5Hex;
+    }
+
+    public void logOut() {
+        userTokens.clear();
     }
 }

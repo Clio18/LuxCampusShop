@@ -27,7 +27,6 @@ public class GetRequestServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(securityService.isAuth(req, userTokens)) {
             List<Product> products = productService.get();
             PageGenerator pageGenerator = PageGenerator.instance();
             HashMap<String, Object> parameters = new HashMap<>();
@@ -35,8 +34,5 @@ public class GetRequestServlet extends HttpServlet {
 
             String page = pageGenerator.getPage("products.html", parameters);
             resp.getWriter().write(page);
-        } else {
-            resp.sendRedirect("/login");
-        }
     }
 }

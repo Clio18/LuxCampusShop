@@ -45,8 +45,10 @@ public class LoginServlet extends HttpServlet {
             String email = req.getParameter("email");
             User user = User.builder().email(email).password(hashPassword).build();
             if (userService.isNew(user)) {
+                System.out.println("Is new!");
                 resp.sendRedirect("/registration");
             } else {
+                System.out.println("Not new!");
                 String userToken = UUID.randomUUID().toString();
                 userTokens.add(userToken);
                 Cookie cookie = new Cookie("user-token", userToken);

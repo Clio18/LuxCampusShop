@@ -35,7 +35,6 @@ public class AddRequestServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-       if (securityService.isAuth(req, userTokens)) {
            try {
                String name = req.getParameter("name");
                double price = Double.parseDouble(req.getParameter("price"));
@@ -49,8 +48,5 @@ public class AddRequestServlet extends HttpServlet {
                String page = pageGenerator.getPage("addProduct.html", parameters);
                resp.getWriter().write(page);
            }
-       }else {
-           resp.sendRedirect("/login");
-       }
     }
 }
