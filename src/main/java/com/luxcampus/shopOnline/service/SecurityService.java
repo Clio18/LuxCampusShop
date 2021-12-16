@@ -1,7 +1,6 @@
 package com.luxcampus.shopOnline.service;
 
 import org.apache.commons.codec.digest.DigestUtils;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -33,7 +32,7 @@ public class SecurityService {
         return md5Hex;
     }
 
-    public void logOut() {
-        userTokens.clear();
+    public void logOut(Cookie cookie) {
+        userTokens.remove(cookie.getValue());
     }
 }

@@ -10,6 +10,7 @@ public class UserDAOImpl implements UserDAO {
     private static final UserRowMapper USER_ROW_MAPPER = new UserRowMapper();
     private static final String GET_ALL_SQL = "SELECT * FROM users;";
     private static final String GET_ID_BY_EMAIL_AND_PASSWORD_SQL = "SELECT id FROM users where email = ? and password = ?;";
+    private static final String GET_BY_ID_SQL = "SELECT * FROM users where id = ?;";
     private static final String SAVE_SQL = "INSERT INTO users(name, last_Name, email, password) VALUES (?, ?, ?, ?)";
     private static final String DELETE_SQL = "DELETE FROM users where id= ?";
     private static final String UPDATE_SQL = "UPDATE users SET email = ?, password = ? where id = ?";
@@ -106,6 +107,23 @@ public class UserDAOImpl implements UserDAO {
             e.printStackTrace();
             throw new RuntimeException("Error with user update", e);
         }
+    }
+
+    @Override
+    public User getById(int id) {
+        User user = null;
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID_SQL)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                user = USER_ROW_MAPPER.mapRow(resultSet);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw new RuntimeException("Error with user retrieving", e);
+        }
+        return user;
     }
 
 

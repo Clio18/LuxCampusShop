@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,13 +28,19 @@ public class UpdateRequestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PageGenerator pageGenerator = PageGenerator.instance();
-        String page = pageGenerator.getPage("updateProduct.html");
+        int id = Integer.parseInt(req.getParameter("id"));
+        Product product = productService.getById(id);
+        HashMap<String, Object> parameters = new HashMap<>();
+        parameters.put("product", product);
+        String page = pageGenerator.getPage("updateProduct.html", parameters);
         resp.getWriter().write(page);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
             try {
+                System.out.println("HERE");
+
                 int id = Integer.parseInt(req.getParameter("id"));
                 String name = req.getParameter("name");
                 double price = Double.parseDouble(req.getParameter("price"));

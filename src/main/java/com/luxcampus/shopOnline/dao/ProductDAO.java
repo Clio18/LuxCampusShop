@@ -1,5 +1,7 @@
 package com.luxcampus.shopOnline.dao;
 import com.luxcampus.shopOnline.entity.Product;
+import com.luxcampus.shopOnline.entity.User;
+
 import java.util.List;
 
 public interface ProductDAO {
@@ -10,4 +12,6 @@ public interface ProductDAO {
     boolean delete(int id);
 
     boolean update(Product product);
+
+    Product getById(int id);
 }

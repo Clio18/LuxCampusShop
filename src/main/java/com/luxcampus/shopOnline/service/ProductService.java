@@ -36,4 +36,9 @@ public class ProductService {
         return productDAO.update(product);
     }
 
+    public Product getById(int id) {
+        Product product = productDAO.getById(id);
+        return product;
+    }
+
 }

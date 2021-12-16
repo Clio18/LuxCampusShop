@@ -18,11 +18,13 @@ product_id serial PRIMARY KEY,
 
 
 public class ProductDAOImpl implements ProductDAO {
-    private static final ProductRowMapper SHOP_ROW_MAPPER = new ProductRowMapper();
+    private static final ProductRowMapper PRODUCT_ROW_MAPPER = new ProductRowMapper();
     private static final String GET_SQL = "SELECT product_id, name, price, created_on FROM product;";
     private static final String SAVE_SQL = "INSERT INTO product(name, price, created_on) VALUES (?, ?, ?)";
     private static final String DELETE_SQL = "DELETE FROM product where product_id= ?";
     private static final String UPDATE_SQL = "UPDATE product SET name = ?, price = ?, created_on = ? where product_id = ?";
+    private static final String GET_BY_ID_SQL = "SELECT * FROM product where product_id = ?;";
+
 
     @Override
     public List<Product> get() {
@@ -32,7 +34,7 @@ public class ProductDAOImpl implements ProductDAO {
 
             List<Product> solutions = new ArrayList<>();
             while (resultSet.next()) {
-                Product product = SHOP_ROW_MAPPER.mapRow(resultSet);
+                Product product = PRODUCT_ROW_MAPPER.mapRow(resultSet);
                 solutions.add(product);
             }
             return solutions;
@@ -97,6 +99,23 @@ public class ProductDAOImpl implements ProductDAO {
             e.printStackTrace();
             throw new RuntimeException("Error with product update", e);
         }
+    }
+
+    @Override
+    public Product getById(int id) {
+        Product product = null;
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID_SQL)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                product = PRODUCT_ROW_MAPPER.mapRow(resultSet);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+            throw new RuntimeException("Error with product retrieving", e);
+        }
+        return product;
     }
 
 
