@@ -1,6 +1,5 @@
 package com.luxcampus.shopOnline.dao;
 import com.luxcampus.shopOnline.entity.Product;
-import com.luxcampus.shopOnline.entity.User;
 
 import java.util.List;
 

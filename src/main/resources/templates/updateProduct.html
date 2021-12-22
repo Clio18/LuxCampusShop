@@ -53,8 +53,8 @@
             <div class="col-md-6">
                 <label for="exampleInputPrice1" class="form-label">Product price</label>
                 <input type="number" step="0.01" class="form-control" id="exampleInputPrice1"
-                       name="price" value="${product.price?string.computer}" aria-describedby="priceHelp" required>
-                <div id="priceHelp" class="form-text">Enter product price</div>
+                       min="0" name="price" value="${product.price?string.computer}" required>
+                <div class="form-text">Enter product price</div>
             </div>
         </div>
 

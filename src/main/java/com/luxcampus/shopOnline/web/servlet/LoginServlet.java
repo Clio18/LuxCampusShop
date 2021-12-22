@@ -1,12 +1,8 @@
 package com.luxcampus.shopOnline.web.servlet;
-
-import com.luxcampus.shopOnline.entity.Product;
 import com.luxcampus.shopOnline.entity.User;
 import com.luxcampus.shopOnline.service.SecurityService;
 import com.luxcampus.shopOnline.service.UserService;
 import com.luxcampus.shopOnline.web.util.PageGenerator;
-
-
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
