@@ -95,6 +95,18 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>com.heroku.sdk</groupId>
+        <artifactId>heroku-maven-plugin</artifactId>
+        <version>3.0.3</version>
+        <configuration>
+          <appName>os</appName>
+          <jdkVersion>${maven.compiler.source}</jdkVersion>
+          <processTypes>
+            <web>ava $JAVA_OPTS -cp target/classes:target/dependency/* Starter</web>
+          </processTypes>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>
