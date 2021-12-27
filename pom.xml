@@ -67,6 +67,14 @@
       <version>1.15</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.3</version>
+      <scope>test</scope>
+    </dependency>
+
   </dependencies>
   <build>
     <finalName>os</finalName>
@@ -95,18 +103,30 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>com.heroku.sdk</groupId>
         <artifactId>heroku-maven-plugin</artifactId>
         <version>3.0.3</version>
         <configuration>
-          <appName>os</appName>
+          <appName>online-sh</appName>
           <jdkVersion>${maven.compiler.source}</jdkVersion>
           <processTypes>
-            <web>ava $JAVA_OPTS -cp target/classes:target/dependency/* Starter</web>
+            <web>java $JAVA_OPTS -jar target/os-jar-with-dependencies.jar</web>
           </processTypes>
         </configuration>
       </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.target}</target>
+        </configuration>
+      </plugin>
+
     </plugins>
   </build>
 </project>
