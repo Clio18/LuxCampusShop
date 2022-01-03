@@ -112,7 +112,7 @@
           <appName>online-sh</appName>
           <jdkVersion>${maven.compiler.source}</jdkVersion>
           <processTypes>
-            <web>java $JAVA_OPTS -jar target/os-jar-with-dependencies.jar</web>
+            <web>java $JAVA_OPTS -Dport=$PORT -jar target/os-jar-with-dependencies.jar</web>
           </processTypes>
         </configuration>
       </plugin>

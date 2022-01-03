@@ -7,17 +7,15 @@ import com.luxcampus.shopOnline.service.SecurityService;
 import com.luxcampus.shopOnline.service.UserService;
 import com.luxcampus.shopOnline.web.filter.SecurityFilter;
 import com.luxcampus.shopOnline.web.servlet.*;
+import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-
 import javax.servlet.DispatcherType;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.List;
+import java.util.*;
 
+//@Slf4j
 public class Starter {
     public static void main(String[] args) throws Exception {
         // config
@@ -60,9 +58,46 @@ public class Starter {
         //filter
         context.addFilter(new FilterHolder(new SecurityFilter(securityService)), "/*", EnumSet.of(DispatcherType.REQUEST));
 
-        Server server = new Server(8088);
+        //connection in prod requires usage of environment variables
+        Server server;
+        String port = System.getenv("PORT");
+        if(port!=null){
+           server = new Server(Integer.parseInt(port));
+        }else {
+            server = new Server(8088);
+        }
+
         server.setHandler(context);
 
+        printSystemVariables();
+        System.out.println();
+        printEnvVariables();
+
         server.start();
+
+
+    }
+
+    //shows all system variables
+    private static void printSystemVariables(){
+        System.out.println("=====SYSTEM VARIABLES START=====");
+        Properties properties = System.getProperties();
+        Set<Map.Entry<Object, Object>> entries = properties.entrySet();
+        for (Map.Entry<Object, Object> entry : entries) {
+           //log.info(entry.getKey() + " = " + entry.getValue());
+            System.out.println((entry.getKey() + " = " + entry.getValue()));
+        }
+        System.out.println("=====SYSTEM VARIABLES STOP=====");
+    }
+
+    //shows all environment variables
+    private static void printEnvVariables(){
+        System.out.println("=====ENV VARIABLES START=====");
+        Map<String, String> getenv = System.getenv();
+        Set<Map.Entry<String, String>> entries = getenv.entrySet();
+        for (Map.Entry<String, String> entry : entries) {
+            System.out.println((entry.getKey() + " = " + entry.getValue()));
+        }
+        System.out.println("====ENV VARIABLES STOP=====");
     }
 }

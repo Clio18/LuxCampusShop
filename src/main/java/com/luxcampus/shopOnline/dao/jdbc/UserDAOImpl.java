@@ -128,6 +128,17 @@ public class UserDAOImpl implements UserDAO {
 
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:postgresql://localhost:8200/postgres", "postgres", "postgres");
+        //connection in prod requires usage of environment variables
+        Connection connection;
+        String jdbc_url = System.getenv("JDBC_DATABASE_URL");
+        String user = System.getenv("JDBC_DATABASE_USERNAME");
+        String password = System.getenv("SPRING_DATASOURCE_PASSWORD");
+        if(jdbc_url!=null){
+            connection = DriverManager.getConnection(jdbc_url, user, password);
+        }else {
+            //connection in local
+            connection = DriverManager.getConnection("jdbc:postgresql://localhost:8200/postgres", "postgres", "postgres");
+        }
+        return connection;
     }
 }
