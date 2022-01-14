@@ -15,13 +15,9 @@ import java.util.Map;
 
 public class DeleteRequestServlet extends HttpServlet {
     private ProductService productService;
-    private List<String> userTokens;
-    private SecurityService securityService;
 
-    public DeleteRequestServlet(ProductService productService, List<String> userTokens, SecurityService securityService) {
+    public DeleteRequestServlet(ProductService productService) {
         this.productService = productService;
-        this.userTokens = userTokens;
-        this.securityService = securityService;
     }
 
     @Override

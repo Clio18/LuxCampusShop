@@ -35,10 +35,10 @@ public class Starter {
         SecurityService securityService = new SecurityService(userTokens);
 
         // servlet
-        GetRequestServlet getRequestServlet = new GetRequestServlet(productService, userTokens, securityService);
-        AddRequestServlet addRequestServlet = new AddRequestServlet(productService, userTokens, securityService);
-        DeleteRequestServlet deleteRequestServlet = new DeleteRequestServlet(productService, userTokens, securityService);
-        UpdateRequestServlet updateRequestServlet = new UpdateRequestServlet(productService, userTokens, securityService);
+        GetRequestServlet getRequestServlet = new GetRequestServlet(productService);
+        AddRequestServlet addRequestServlet = new AddRequestServlet(productService);
+        DeleteRequestServlet deleteRequestServlet = new DeleteRequestServlet(productService);
+        UpdateRequestServlet updateRequestServlet = new UpdateRequestServlet(productService);
         //login servlet
         LoginServlet loginServlet = new LoginServlet(userService, userTokens, securityService);
         RegistrationServlet registrationServlet = new RegistrationServlet(userService, securityService);

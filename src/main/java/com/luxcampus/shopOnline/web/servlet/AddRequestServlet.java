@@ -17,13 +17,9 @@ import java.util.Map;
 
 public class AddRequestServlet extends HttpServlet {
     private ProductService productService;
-    private SecurityService securityService;
-    private List<String> userTokens;
 
-    public AddRequestServlet(ProductService productService, List<String> userTokens, SecurityService securityService) {
+    public AddRequestServlet(ProductService productService) {
         this.productService = productService;
-        this.userTokens = userTokens;
-        this.securityService = securityService;
     }
 
     @Override
